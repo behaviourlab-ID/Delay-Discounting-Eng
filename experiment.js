@@ -176,10 +176,10 @@ let practice_trial = {
         <div class="row">
           <!-- Note: using class "option" with data-choice attribute -->
           <div class="option" data-choice="0">
-            <center><font color='green'>$${formatIDR(20.58)}<br>today</font></center>
+            <center><font color='green'>$${(20.58)}<br>today</font></center>
           </div>
           <div class="option" data-choice="1">
-            <center><font color='green'>$${formatIDR(25.93)}<br>in two weeks</font></center>
+            <center><font color='green'>$${(25.93)}<br>in two weeks</font></center>
           </div>
         </div>
       </div>
