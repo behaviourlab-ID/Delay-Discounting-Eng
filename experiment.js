@@ -2,15 +2,6 @@ console.log("experiment.js is running!");
 
 // ============ 1) Helper Functions ============
 
-/** Convert a number to Indonesian Rupiah style, e.g. 204.135,26 */
-function formatIDR(amount) {
-  // Round to the nearest 1000
-  let rounded = Math.round(amount / 1000) * 1000;
-  // Convert to string and insert dots as thousand separators using a regex
-  let formatted = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return formatted;
-}
-
 function rnorm(mean = 0, stdev = 1) {
   let u1, u2, v1, v2, s;
   if (rnorm.v2 === null) {
@@ -176,10 +167,10 @@ let practice_trial = {
         <div class="row">
           <!-- Note: using class "option" with data-choice attribute -->
           <div class="option" data-choice="0">
-            <center><font color='green'>$${(20.58)}<br>today</font></center>
+            <center><font color='green'>$${20.58}<br>today</font></center>
           </div>
           <div class="option" data-choice="1">
-            <center><font color='green'>$${(25.93)}<br>in two weeks</font></center>
+            <center><font color='green'>$${25.93}<br>in two weeks</font></center>
           </div>
         </div>
       </div>
@@ -228,8 +219,8 @@ let comprehension_block = {
 // 4E) Main test block – 20 trials with random amounts and delays
 let main_test_block = {
   timeline: trials.map((t, i) => {
-    let small_str = formatIDR(t.smaller_amount);
-    let large_str = formatIDR(t.larger_amount);
+    let small_str = t.smaller_amount.toFixed(2);
+    let large_str = t.larger_amount.toFixed(2);
     return {
       type: jsPsychHtmlButtonResponse,
       stimulus: `
