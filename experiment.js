@@ -74,17 +74,30 @@ function assessPerformance() {
 let bonus_list = [];
 
 // Generate 20 random smaller amounts (rounded to 2 decimals)
+// 1) Generate 20 random "smaller" amounts (with mean=50, stdev=10), 
+// then clamp them to [20, 80].
 let small_amts = [];
 for (let i = 0; i < 20; i++) {
-  let val = Math.round(rnorm(20, 10) * 100) / 100;
-  if (val < 50) val = 50;
-  if (val > 400) val = 400;
+  // Generate a random normal with mean=50, stdev=10
+  let val = rnorm(50, 10);
+
+  // Round to two decimals
+  val = Math.round(val * 100) / 100;
+
+  // Clamp to [20, 80]
+  if (val < 20) val = 20;
+  if (val > 80) val = 80;
+
   small_amts.push(val);
 }
+
 let rel_dif = fillArray([1.01, 1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.50, 1.75], 4);
 let larger_amts = [];
+
 for (let i = 0; i < 20; i++) {
-  let val = Math.round(small_amts[i] * rel_dif[i] * 100) / 100;
+  let val = small_amts[i] * rel_dif[i];
+  // Round to two decimals
+  val = Math.round(val * 100) / 100;
   larger_amts.push(val);
 }
 
