@@ -85,9 +85,9 @@ let bonus_list = [];
 // Generate 20 random smaller amounts (rounded to 2 decimals)
 let small_amts = [];
 for (let i = 0; i < 20; i++) {
-  let val = Math.round(rnorm(200000, 100000) * 100) / 100;
-  if (val < 50000) val = 50000;
-  if (val > 400000) val = 400000;
+  let val = Math.round(rnorm(20, 10) * 100) / 100;
+  if (val < 50) val = 50;
+  if (val > 400) val = 400;
   small_amts.push(val);
 }
 let rel_dif = fillArray([1.01, 1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.50, 1.75], 4);
@@ -98,10 +98,10 @@ for (let i = 0; i < 20; i++) {
 }
 
 // Delays
-let sooner_dels = fillArray(["hari ini"], 18).concat(fillArray(["2 minggu lagi"], 18));
-let later_dels = fillArray(["2 minggu lagi"], 9)
-  .concat(fillArray(["4 minggu lagi"], 18))
-  .concat(fillArray(["6 minggu lagi"], 9));
+let sooner_dels = fillArray(["today"], 18).concat(fillArray(["in 2 weeks"], 18));
+let later_dels = fillArray(["in 2 weeks"], 9)
+  .concat(fillArray(["in 4 weeks"], 18))
+  .concat(fillArray(["in 6 weeks"], 9));
 
 // Build 20 test trials (store amounts as numbers; formatting happens later)
 let trials = [];
@@ -133,8 +133,8 @@ jsPsych.data.addProperties({
 
 // 4A) Introduction (single button)
 let intro_text = `
-  Selamat datang. Eksperimen ini dapat diselesaikan dalam ±5 menit.
-  Silakan klik "Mulai" untuk memulai.
+  Welcome to the experiment. This task will take around 5 minutes.
+  Click "Start" to begin.
 `;
 let intro_block = {
   type: jsPsychHtmlButtonResponse,
@@ -143,7 +143,7 @@ let intro_block = {
       <p class="center-block-text">${intro_text}</p>
     </div>
   `,
-  choices: ["Mulai"],
+  choices: ["Start"],
   data: { trial_id: "intro" }
 };
 
@@ -153,15 +153,15 @@ let instructions_block = {
   pages: [
     `<div id="container">
        <p class="center-block-text">
-         Kamu akan melihat dua jumlah uang yang berbeda, masing-masing tersedia di waktu yang berbeda.
-         Klik salah satu pilihan untuk memilih.
+         In this experiment, you will be presented with two amounts of money to choose between. These amounts will be available at different time points. .
+         Your job is to indicate which option you would prefer by clicking on the option you prefer.
        </p>
        <p class="center-block-text">
-         Mohon untuk mengisi survey ini <strong>sejujur mungkin</strong> sesuai dengan pendapat kamu.
+         Please indicate your <strong>true</strong> preference.
        </p>
      </div>`
   ],
-  button_label_next: "Lanjut",
+  button_label_next: "Next",
   show_clickable_nav: true,
   data: { trial_id: "instructions" }
 };
@@ -171,15 +171,15 @@ let practice_trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
     <div id="container">
-      <p class="center-block-text">Contoh: pilih mana yang kamu mau.</p>
+      <p class="center-block-text">Here is a sample trial: Please select the option that you would prefer:</p>
       <div class="table">
         <div class="row">
           <!-- Note: using class "option" with data-choice attribute -->
           <div class="option" data-choice="0">
-            <center><font color='green'>Rp${formatIDR(20000)}<br>hari ini</font></center>
+            <center><font color='green'>$${formatIDR(20.58)}<br>today</font></center>
           </div>
           <div class="option" data-choice="1">
-            <center><font color='green'>Rp${formatIDR(25000)}<br>Dua minggu lagi</font></center>
+            <center><font color='green'>$${formatIDR(25.93)}<br>in two weeks</font></center>
           </div>
         </div>
       </div>
@@ -189,10 +189,10 @@ let practice_trial = {
   data: {
     trial_id: "stim",
     exp_stage: "practice",
-    smaller_amount: 20000,
-    sooner_delay: "hari ini",
-    larger_amount: 25000,
-    later_delay: "2 minggu lagi"
+    smaller_amount: 20.58,
+    sooner_delay: "today",
+    larger_amount: 25.93,
+    later_delay: "in 2 weeks"
   },
   on_load: function() {
     // Attach click event listeners to the option divs
@@ -217,11 +217,11 @@ let comprehension_block = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
     <div id="container">
-      <p class="center-block-text">Apakah kamu sudah mengerti apa yang harus kamu lakukan?</p>
-      <p class="center-block-text">Jika ya, klik tombol di bawah untuk memulai sesi utama.</p>
+      <p class="center-block-text">You are now ready to begin the survey</p>
+      <p class="center-block-text">Klick the button to begin</p>
     </div>
   `,
-  choices: ["Ya, saya mengerti!"],
+  choices: ["Begin"],
   data: { trial_id: "comprehension_check" }
 };
 
@@ -234,15 +234,15 @@ let main_test_block = {
       type: jsPsychHtmlButtonResponse,
       stimulus: `
         <div id="container">
-          <p class="center-block-text">Pilih mana yang kamu mau:</p>
+          <p class="center-block-text">Which option you prefer:</p>
           <div class="table">
             <div class="row">
               <!-- Clickable options with data-choice attribute -->
               <div class="option" data-choice="0">
-                <center><font color='green'>Rp${small_str}<br>${t.sooner_delay}</font></center>
+                <center><font color='green'>$${small_str}<br>${t.sooner_delay}</font></center>
               </div>
               <div class="option" data-choice="1">
-                <center><font color='green'>Rp${large_str}<br>${t.later_delay}</font></center>
+                <center><font color='green'>$${large_str}<br>${t.later_delay}</font></center>
               </div>
             </div>
           </div>
@@ -295,16 +295,16 @@ let end_block = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
     <div id="container">
-      <p class="center-block-text">Terima kasih telah menyelesaikan tugas ini!</p>
-      <p class="center-block-text">Klik "Selesai" untuk submit data.</p>
+      <p class="center-block-text">Thank you for participating in this experiment!</p>
+      <p class="center-block-text">Click "Finish" to finish the experiment.</p>
     </div>
   `,
-  choices: ["Selesai"],
+  choices: ["Finish"],
   data: { trial_id: "end" },
   on_finish: function() {
     assessPerformance();
     let experimentData = jsPsych.data.get().json();
-    fetch("https://script.google.com/macros/s/AKfycbz2ccQWlWeZTNL8EVP4_AEbDM_GAsu3f9WziZtwlsFxFaOrFUzifbhgWRrMRdflPtr0fg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwJ3kN7VhhX7ToYg531mgGGTRg3yffWmSH5J7AZVXEITIAxiiCjCEM2nSjskNSWs0DR6g/exec", {
       method: "POST",
       mode: "no-cors", // bypass CORS checks if needed
       body: experimentData,
@@ -325,8 +325,8 @@ let final_instruction_block = {
   stimulus: `
     <div id="container">
       <p class="center-block-text">
-        Bagian ini sudah selesai dan data anda sudah tersimpan. <br>
-        Silahkan klik panah biru di pojok kanan bawah untuk melanjutkan.
+        This part is finished. <br>
+        Please click the blue arrow button on the bottom right.
       </p>
     </div>
   `,
