@@ -1,0 +1,115 @@
+/* Reset box-sizing for all elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 1) Basic Page Settings */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  background-color: #f3f3f3;
+  font-family: Arial, sans-serif;
+}
+
+/* 2) Container Styling */
+#container {
+  max-width: 600px;
+  width: 100%;
+  margin: 20px auto;       /* Center the container with vertical margins */
+  padding: 20px;           /* Internal spacing */
+  background-color: #fff;  /* White background */
+  border-radius: 8px;      /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+}
+
+/* 3) Text Styling */
+.center-block-text {
+  font-size: 20px;         /* Base font size */
+  line-height: 1.5em;
+  margin-bottom: 20px;     /* Space below text */
+  word-wrap: break-word;   /* Prevent long words from overflowing */
+}
+
+/* 4) Table Layout for Options */
+.table {
+  display: table;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.row {
+  display: table-row;
+}
+
+.option {
+  display: table-cell;
+  width: 50%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;             /* Indicates clickable element */
+  transition: background-color 0.3s ease;
+}
+
+.option:hover {
+  background-color: #e6f0ff;
+}
+
+/* 5) Responsive Adjustments via Media Queries */
+@media (max-width: 600px) {
+  /* Ensure the container is centered and fits within the viewport */
+  #container {
+    width: 90%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  /* Use Flexbox to stack options vertically */
+  .table {
+    display: flex;
+    flex-direction: column; /* Stack options vertically */
+    align-items: center;    /* Center the content */
+    width: 100%;
+  }
+
+  .row {
+    width: 100%;
+  }
+
+  .option {
+    display: block;
+    width: 90%;         /* Reduce width slightly to prevent edge overflow */
+    margin: 5px auto;   /* Center each option */
+    padding: 12px;      /* Adjust padding for smaller screens */
+    box-sizing: border-box;
+  }
+
+  /* Adjust text size for readability on smaller screens */
+  .center-block-text {
+    font-size: 18px;
+  }
+}
+
+/* 6) Overriding jsPsych Buttons */
+.jspsych-btn {
+  display: block !important;
+  width: 100% !important;
+  max-width: 200px !important;
+  margin: 20px auto 0 !important;
+  padding: 12px 20px !important;
+  font-size: 18px !important;
+  background-color: #007bff !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.jspsych-btn:hover {
+  background-color: #0056b3 !important;
+}
